@@ -6,6 +6,8 @@
     android:background="@color/white"
     tools:context="Fragment.Scan">
 
+
+
     <titik.com.pantaupadi.Activity.Detection.CameraView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -14,7 +16,7 @@
         android:id="@+id/main_activity_camera_view" />
 
     <LinearLayout
-        android:layout_marginTop="480dp"
+        android:layout_marginTop="400dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -22,7 +24,7 @@
 
         <TextView
             android:id="@+id/main_activity_result_text"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -30,7 +32,7 @@
             android:layout_marginStart="107dp"
             android:layout_marginEnd="104dp"
             android:background="@color/transparent"
-            android:text="Nilai Warna"
+            android:text="Nilai Resistor"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="20dp" />
@@ -48,16 +50,16 @@
                 android:orientation="horizontal">
 
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/main_activity_details_button"-->
-                    <!--android:layout_width="70dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:layout_marginLeft="130dp"-->
-                    <!--android:background="@drawable/circle_green"-->
-                    <!--android:enabled="false"-->
-                    <!--android:gravity="center"-->
-                    <!--android:padding="5dp"-->
-                    <!--android:src="@drawable/icon_detail_background" />-->
+                <ImageView
+                    android:id="@+id/main_activity_details_button"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="130dp"
+                    android:background="@drawable/circle_green"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/icon_detail_background" />
 
                 <!--<ToggleButton-->
                     <!--android:id="@+id/mainActivity_flash_toggle"-->
@@ -81,16 +83,16 @@
                     android:src="@drawable/icon_camera_background" />
 
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/mainActivity_settings"-->
-                    <!--android:layout_width="70dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:layout_marginLeft="20dp"-->
-                    <!--android:background="@drawable/circle_green"-->
-                    <!--android:enabled="false"-->
-                    <!--android:gravity="center"-->
-                    <!--android:padding="5dp"-->
-                    <!--android:src="@drawable/icon_setting_background" />-->
+                <ImageView
+                    android:id="@+id/mainActivity_settings"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/circle_green"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/icon_setting_background" />
 
                 <!--<ImageView-->
                     <!--android:id="@+id/mainActivity_save_image"-->
@@ -105,6 +107,90 @@
                     <!--android:src="@drawable/icon_download_background" />-->
             </LinearLayout>
         </HorizontalScrollView>
+
+        <GridLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:rowCount="3"
+            android:columnCount="2"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorAccent"
+                android:text="gelang 1" />
+
+            <TextView
+                android:id="@+id/txt_gelang1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:text="Tile2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimary"
+                android:text="gelang 2" />
+
+            <TextView
+
+                android:id="@+id/txt_gelang2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorAccent"
+                android:text="Tile4" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:text="gelang 3" />
+
+            <TextView
+                android:id="@+id/txt_gelang3"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimary"
+                android:text="Tile6" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorAccent"
+                android:text="gelang 4" />
+
+            <TextView
+                android:id="@+id/txt_gelang4"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:background="@color/colorPrimary"
+                android:text="Tile8" />
+        </GridLayout>
     </LinearLayout>
 
         <SeekBar

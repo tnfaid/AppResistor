@@ -38,23 +38,16 @@ public class ColorValues {
      * static constructor to initialize the mapping between ColorName and value
      */
     static {
-        colorValues.put(ColorName.Green1, 1);
-        colorValues.put(ColorName.Brown, 2);
-        colorValues.put(ColorName.Red, 3);
-        colorValues.put(ColorName.Orange, 4);
-        colorValues.put(ColorName.Yellow, 5);
-        colorValues.put(ColorName.Green2, 7);
-        colorValues.put(ColorName.Green3, 8);
-        colorValues.put(ColorName.Green4, 9);
-        colorValues.put(ColorName.Green5, 10);
-        colorValues.put(ColorName.Black, 6);
-////        colorValues.put(ColorName.Green, 5);
-        colorValues.put(ColorName.Blue, 11);
-        colorValues.put(ColorName.Violet, 12);
-        colorValues.put(ColorName.Grey, 13);
-        colorValues.put(ColorName.White, 0);
-        colorValues.put(ColorName.Green0, 0);
-        colorValues.put(ColorName.Coba, 0);
+        colorValues.put(ColorName.Black, 0);
+        colorValues.put(ColorName.Brown, 1);
+        colorValues.put(ColorName.Red, 2);
+        colorValues.put(ColorName.Orange, 3);
+        colorValues.put(ColorName.Yellow, 4);
+        colorValues.put(ColorName.Green, 5);
+        colorValues.put(ColorName.Blue, 6);
+        colorValues.put(ColorName.Violet, 7);
+        colorValues.put(ColorName.Grey, 8);
+        colorValues.put(ColorName.White, 9);
     }
 
     /**
@@ -73,6 +66,4 @@ public class ColorValues {
 
         return UNKNOWN_COLOR_VALUE;
     }
-
-
 }

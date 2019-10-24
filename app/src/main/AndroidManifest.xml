@@ -27,7 +27,7 @@
     <application
         android:name=".Activity.AppController"
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/resistor"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
@@ -47,12 +47,14 @@
             android:name=".Activity.Detection.ActivityDetectionContour"
             android:label="DeteksiKontur"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullscreenTheme" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullscreenTheme" >
+        </activity>
         <activity
             android:name=".Activity.ScanHasil"
             android:label="Scan Hasil"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".Activity.ScanHasilDetail"
             android:label="Scan Hasil Detail"

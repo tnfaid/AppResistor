@@ -36,6 +36,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvException;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -174,21 +175,25 @@ public class Scan extends Fragment {
 //                    setupFlashControl();
                     setupStartDetectionControl();
 //                    setupSaveImageControl();
-//                    setupSettingsControl();
+                    setupSettingsControl();
 //                    setupNumberOfBandsControl();
                 }
             });
 
+            final TextView gelangsatu = (TextView) view.findViewById(R.id.txt_gelang1);
+            final TextView gelangdua = (TextView) view.findViewById(R.id.txt_gelang2);
+            final TextView gelangtiga = (TextView) view.findViewById(R.id.txt_gelang3);
+            final TextView gelangempat = (TextView) view.findViewById(R.id.txt_gelang4);
             final TextView resultTextView = (TextView) view.findViewById(R.id.main_activity_result_text);
-//            final ImageView resultDetailsButton = (ImageView) view.findViewById(R.id.main_activity_details_button);
+            final ImageView resultDetailsButton = (ImageView) view.findViewById(R.id.main_activity_details_button);
 
-//            resultDetailsButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    startActivity(new Intent(getContext(), DetectionDetailsActivity.class));
-//                    startActivity(new Intent(getContext(), ActivityDetectionContour.class));
-//                }
-//            });
+            resultDetailsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    startActivity(new Intent(getContext(), DetectionDetailsActivity.class));
+                    startActivity(new Intent(getContext(), ActivityDetectionContour.class));
+                }
+            });
 // INILOOOOOOOOOO
             resultListener = new ResistorDetector.ResultListener() {
                 @Override
@@ -199,59 +204,59 @@ public class Scan extends Fragment {
                             if (detectionResult.getResistorValue() == DetectionResult.UNKNOWN_RESISTANCE_VALUE) {
                                 resultTextView.setText("N/A");
                             } else {
-                                resultTextView.setText( " Warna " + detectionResult.getResistorValue() );
+                                resultTextView.setText( detectionResult.getResistorValue() + " Ohm " );
 
 //                                Toast.makeText(getActivity(), "detecresult" + detectionResult.getResistorValue(), Toast.LENGTH_SHORT).show();
 
 
 
 //                              ini logika modus nya
-                                if(firstDigit.size() >= max_ambil_gambar){
-
-                                    Toast.makeText(getActivity(), "Sudah Maksimal", Toast.LENGTH_SHORT).show();
-                                    firstDigit.clear();
-
-                                } else {
-//                                    Toast.makeText(getActivity(), "Panjang deret element: " + firstDigit.size(), Toast.LENGTH_SHORT).show();
-                                    firstDigit.add(Integer.parseInt(Integer.toString(detectionResult.getResistorValue())));
-
-                                    //ini mengurutkan datanya dulu
-                                    for(int i=0;i<firstDigit.size()-1;i++){
-                                        for(int j=i+1;j<firstDigit.size();j++){
-                                            if(firstDigit.get(j)<firstDigit.get(i)){
-                                                int temp=firstDigit.get(i);
-                                                firstDigit.set(i,firstDigit.get(j));
-                                                firstDigit.set(j, temp);
-                                            }
-                                        }
-                                    }
-
-                                    FrekModus=0;
-                                    i=0;
-                                    while(i < firstDigit.size()){
-                                        KandidatModus= firstDigit.get(i);
-                                        FrekKandidatModus=1;
-                                        i++;
-                                        MasihSama = true;
-                                        while(MasihSama && i< firstDigit.size()){
-                                            if( firstDigit.get(i)==KandidatModus){
-                                                FrekKandidatModus=FrekKandidatModus+1;
-                                                MasihSama=true;
-                                            }
-                                            else{
-                                                MasihSama=false;
-                                            }
-                                            i++;
-                                        }
-                                        if(FrekKandidatModus > FrekModus){
-                                            HModus=KandidatModus;
-                                            FrekModus=FrekKandidatModus;
-                                        }
-                                    }
-                                    Toast.makeText(getContext(), "ambil gambar ke : " + i, Toast.LENGTH_SHORT).show();
-//                                    Toast.makeText(getContext(), "Rata2 : " + result, Toast.LENGTH_SHORT).show();
-//                                    Toast.makeText(getContext(), "Hasil : " +HModus, Toast.LENGTH_LONG).show();
-                                }
+//                                if(firstDigit.size() >= max_ambil_gambar){
+//
+//                                    Toast.makeText(getActivity(), "Sudah Maksimal", Toast.LENGTH_SHORT).show();
+//                                    firstDigit.clear();
+//
+//                                } else {
+////                                    Toast.makeText(getActivity(), "Panjang deret element: " + firstDigit.size(), Toast.LENGTH_SHORT).show();
+//                                    firstDigit.add(Integer.parseInt(Integer.toString(detectionResult.getResistorValue())));
+//
+//                                    //ini mengurutkan datanya dulu
+//                                    for(int i=0;i<firstDigit.size()-1;i++){
+//                                        for(int j=i+1;j<firstDigit.size();j++){
+//                                            if(firstDigit.get(j)<firstDigit.get(i)){
+//                                                int temp=firstDigit.get(i);
+//                                                firstDigit.set(i,firstDigit.get(j));
+//                                                firstDigit.set(j, temp);
+//                                            }
+//                                        }
+//                                    }
+//
+//                                    FrekModus=0;
+//                                    i=0;
+//                                    while(i < firstDigit.size()){
+//                                        KandidatModus= firstDigit.get(i);
+//                                        FrekKandidatModus=1;
+//                                        i++;
+//                                        MasihSama = true;
+//                                        while(MasihSama && i< firstDigit.size()){
+//                                            if( firstDigit.get(i)==KandidatModus){
+//                                                FrekKandidatModus=FrekKandidatModus+1;
+//                                                MasihSama=true;
+//                                            }
+//                                            else{
+//                                                MasihSama=false;
+//                                            }
+//                                            i++;
+//                                        }
+//                                        if(FrekKandidatModus > FrekModus){
+//                                            HModus=KandidatModus;
+//                                            FrekModus=FrekKandidatModus;
+//                                        }
+//                                    }
+//                                    Toast.makeText(getContext(), "ambil gambar ke : " + i, Toast.LENGTH_SHORT).show();
+////                                    Toast.makeText(getContext(), "Rata2 : " + result, Toast.LENGTH_SHORT).show();
+////                                    Toast.makeText(getContext(), "Hasil : " +HModus, Toast.LENGTH_LONG).show();
+//                                }
 
                                 }
                             resultTextView.setVisibility(View.VISIBLE);
@@ -260,6 +265,7 @@ public class Scan extends Fragment {
 
 //                            resultDetailsButton.setVisibility(View.VISIBLE);
 //                            resultDetailsButton.setEnabled(true);
+
                         }
                     });
                 }
@@ -286,47 +292,47 @@ public class Scan extends Fragment {
             startDetectionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(firstDigit.size() == max_ambil_gambar) {
-                        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
-                        View mView = layoutInflaterAndroid.inflate(R.layout.add_date_dialog, null);
-                        android.support.v7.app.AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
-                        alertDialogBuilderUserInput.setView(mView);
-
-                        modus_nilai = (TextView) mView.findViewById(R.id.tv_nilai_modus);
-                        txt_usia = (EditText) mView.findViewById(R.id.txt_usia_tanaman);
-
-                        modus_nilai.setText("Hasil modus perhitungan " +HModus );
-
-                        alertDialogBuilderUserInput
-                                .setCancelable(false)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialogBox, int id) {
-                                        // ToDo get user input here'
-                                        stringUsia = txt_usia.getText().toString();
-                                        Intent intent = new Intent(getActivity(), ScanHasil.class);
-                                            intent.putExtra("intIntentHasil", HModus);
-                                            intent.putExtra("intMax_ambil_gambar", max_ambil_gambar);
-
-                                            //oke ini dah dapet string usianya
-                                            intent.putExtra("intIntentUsia", Integer.parseInt(stringUsia));
-
-                                            getActivity().startActivity(intent);
-//                                            Toast.makeText(getContext(), "nilai modus = "+ HModus + " usia = " + stringUsia + " max ambil gambar = " + max_ambil_gambar, Toast.LENGTH_LONG).show();
-                                    }
-                                })
-
-                                .setNegativeButton("Cancel",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialogBox, int id) {
-                                                firstDigit.clear();
-                                                dialogBox.cancel();
-                                            }
-                                        });
-
-                        android.support.v7.app.AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-                        alertDialogAndroid.show();
-                    }
+//                    if(firstDigit.size() == max_ambil_gambar) {
+//                        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+//                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getContext());
+//                        View mView = layoutInflaterAndroid.inflate(R.layout.add_date_dialog, null);
+//                        android.support.v7.app.AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getContext());
+//                        alertDialogBuilderUserInput.setView(mView);
+//
+//                        modus_nilai = (TextView) mView.findViewById(R.id.tv_nilai_modus);
+//                        txt_usia = (EditText) mView.findViewById(R.id.txt_usia_tanaman);
+//
+//                        modus_nilai.setText("Hasil modus perhitungan " +HModus );
+//
+//                        alertDialogBuilderUserInput
+//                                .setCancelable(false)
+//                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialogBox, int id) {
+//                                        // ToDo get user input here'
+//                                        stringUsia = txt_usia.getText().toString();
+//                                        Intent intent = new Intent(getActivity(), ScanHasil.class);
+//                                            intent.putExtra("intIntentHasil", HModus);
+//                                            intent.putExtra("intMax_ambil_gambar", max_ambil_gambar);
+//
+//                                            //oke ini dah dapet string usianya
+//                                            intent.putExtra("intIntentUsia", Integer.parseInt(stringUsia));
+//
+//                                            getActivity().startActivity(intent);
+////                                            Toast.makeText(getContext(), "nilai modus = "+ HModus + " usia = " + stringUsia + " max ambil gambar = " + max_ambil_gambar, Toast.LENGTH_LONG).show();
+//                                    }
+//                                })
+//
+//                                .setNegativeButton("Cancel",
+//                                        new DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface dialogBox, int id) {
+//                                                firstDigit.clear();
+//                                                dialogBox.cancel();
+//                                            }
+//                                        });
+//
+//                        android.support.v7.app.AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+//                        alertDialogAndroid.show();
+//                    }
                     Mat resistorImage = cameraViewListener.getResistorImage();
 
                     Imgproc.cvtColor(resistorImage, resistorImage, Imgproc.COLOR_RGBA2BGR);
@@ -344,18 +350,18 @@ public class Scan extends Fragment {
          * Sets up and initializes the button which opens the settings activity.
          * A click on this button opens the SettingsActivity.
          */
-//        public void setupSettingsControl() {
-//            ImageView settingsButton = (ImageView) getActivity().findViewById(R.id.mainActivity_settings);
-//
-//            settingsButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startActivity(new Intent(getContext(), SettingsActivity.class));
-//                }
-//            });
-//
-//            settingsButton.setVisibility(View.VISIBLE);
-//        }
+        public void setupSettingsControl() {
+            ImageView settingsButton = (ImageView) getActivity().findViewById(R.id.mainActivity_settings);
+
+            settingsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getContext(), SettingsActivity.class));
+                }
+            });
+
+            settingsButton.setVisibility(View.VISIBLE);
+        }
 
         /**
          * Sets up and initializes the spinner to select the number of bands the resistor has.
@@ -600,12 +606,12 @@ public class Scan extends Fragment {
             DetectionMode detectionMode = appSettings.getDetectionMode();
 
             switch (detectionMode) {
-                case ContoursModResistorDetection:
-                    resistorDetector = new ContoursModResistorDetector(resultListener);
-                    break;
-
                 case ColumnResistorDetection:
                     resistorDetector = new ColumnsResistorDetector(resultListener);
+                    break;
+
+                case ContoursModResistorDetection:
+                    resistorDetector = new ContoursModResistorDetector(resultListener);
                     break;
 
                 case ExperimentsResistorDetection:

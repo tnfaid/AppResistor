@@ -1,5 +1,6 @@
 package titik.com.pantaupadi.FungsiDeteksi;
 
+
 import android.util.SparseIntArray;
 
 import org.opencv.core.Core;
@@ -25,7 +26,7 @@ public class ContoursModResistorDetector extends ResistorDetector {
      */
     private static final boolean VERBOSE_DETECTION_DETAILS = false;
 
-    private static final int NUM_CODES = 15;
+    private static final int NUM_CODES = 10;
 
     // HSV colour bounds
     private static final Scalar COLOR_BOUNDS[][] = {
@@ -34,19 +35,11 @@ public class ContoursModResistorDetector extends ResistorDetector {
             {ColorDefinitionsHsv.RED1_MIN, ColorDefinitionsHsv.RED1_MAX},         // red (defined by two bounds)
             {ColorDefinitionsHsv.ORANGE_MIN, ColorDefinitionsHsv.ORANGE_MAX},   // orange
             {ColorDefinitionsHsv.YELLOW_MIN, ColorDefinitionsHsv.YELLOW_MAX}, // yellow
-//            {ColorDefinitionsHsv.GREEN_MIN, ColorDefinitionsHsv.GREEN_MAX},   // green
+            {ColorDefinitionsHsv.GREEN_MIN, ColorDefinitionsHsv.GREEN_MAX},   // green
             {ColorDefinitionsHsv.BLUE_MIN, ColorDefinitionsHsv.BLUE_MAX},  // blue
             {ColorDefinitionsHsv.VIOLET_MIN, ColorDefinitionsHsv.VIOLET_MAX}, // purple
             {ColorDefinitionsHsv.GREY_MIN, ColorDefinitionsHsv.GREY_MAX},       // gray
-            {ColorDefinitionsHsv.WHITE_MIN, ColorDefinitionsHsv.WHITE_MAX},      // white
-            {ColorDefinitionsHsv.GREEN_MIN0, ColorDefinitionsHsv.GREEN_MAX0},      // green0
-            {ColorDefinitionsHsv.GREEN_MIN1, ColorDefinitionsHsv.GREEN_MAX1},      // green1
-            {ColorDefinitionsHsv.GREEN_MIN2, ColorDefinitionsHsv.GREEN_MAX2},      // green2
-            {ColorDefinitionsHsv.GREEN_MIN3, ColorDefinitionsHsv.GREEN_MAX3},      // green3
-            {ColorDefinitionsHsv.GREEN_MIN4, ColorDefinitionsHsv.GREEN_MAX4},      // green3
-            {ColorDefinitionsHsv.GREEN_MIN5, ColorDefinitionsHsv.GREEN_MAX5},      // green3
-            {ColorDefinitionsHsv.COBA_MIN, ColorDefinitionsHsv.COBA_MAX},      // coba
-
+            {ColorDefinitionsHsv.WHITE_MIN, ColorDefinitionsHsv.WHITE_MAX}      // white
     };
 
     // red wraps around in HSV, so we need two ranges
@@ -54,7 +47,6 @@ public class ContoursModResistorDetector extends ResistorDetector {
     private static Scalar UPPER_RED1 = ColorDefinitionsHsv.RED1_MAX;
     private static Scalar LOWER_RED2 = ColorDefinitionsHsv.RED2_MIN;
     private static Scalar UPPER_RED2 = ColorDefinitionsHsv.RED2_MAX;
-
 
     private SparseIntArray locationValues = new SparseIntArray(4);
 
@@ -78,39 +70,24 @@ public class ContoursModResistorDetector extends ResistorDetector {
         detectionResult.addDetectionStepDetail(new DetectionStepDetail("original Image", resistorImage));
 
         Mat filteredMat = new Mat();
-        /**
-         * pengertian cara penggunaan bilateral filter
-         * https://www.tutorialspoint.com/opencv/opencv_bilateral_filter
-         *bilateral filter menggunakan metode medianBlur()  dari kelas imgproc
-         *
-         * bilateralFilter(src, dst, d, sigmaColor, sigmaSpace, borderType)
-         *
-         * src : Mat object, semacam sumber inputan image
-         * dst : Mat object yang merepresentasikan tujuan/ output image untuk operasi ini
-         * d : sebuah variabel tipe data integer yang menggambarkan diameter darii pizel neighborhood
-         * sigmaColor : sebuah variabel yang bertipe integer yang menggambarkan filter sigma pada color spave
-         * sigmaSpace : sbuah variabel bertipe data integer yang menggambarkan filter sigma pada bagian koordinat
-         * borderType : sebuah objek integer yang menggambarkan tipe dari border yang digunakan
-         */
         Imgproc.bilateralFilter(resistorImage, filteredMat, 5, 80, 80);
 
         if (VERBOSE_DETECTION_DETAILS)
             detectionResult.addDetectionStepDetail(new DetectionStepDetail("filtered Image", filteredMat));
 
-        Imgproc.cvtColor(filteredMat, filteredMat, Imgproc.COLOR_HSV2BGR);
+        Imgproc.cvtColor(filteredMat, filteredMat, Imgproc.COLOR_BGR2HSV);
 
         findLocations(filteredMat);
 
-        if (locationValues.size() >= 1) {
+        if (locationValues.size() >= 3) {
             // recover the resistor value by iterating through the centroid locations
             // in an ascending manner and using their associated colour values
-            int warna1 = locationValues.valueAt(0);
-            int warna2 = locationValues.valueAt(1);
-            int warna3 = locationValues.valueAt(2);
+            int kTens = locationValues.keyAt(0);
+            int kUnits = locationValues.keyAt(1);
+            int kPower = locationValues.keyAt(2);
 
-            int value = warna1 ;
-//            int value = locationValues.get(warna1) + locationValues.get(warna2) + locationValues.get(warna3);
-//            value *= Math.pow(10, locationValues.get(warna3));
+            int value = 10 * locationValues.get(kTens) + locationValues.get(kUnits);
+            value *= Math.pow(10, locationValues.get(kPower));
 
             detectionResult.setResistorValue(value);
         }
@@ -131,7 +108,6 @@ public class ContoursModResistorDetector extends ResistorDetector {
     private void findLocations(Mat searchMat) {
         locationValues.clear();
         SparseIntArray areas = new SparseIntArray(4);
-
 
         for (int i = 0; i < NUM_CODES; i++) {
             Mat mask = new Mat();
@@ -183,3 +159,5 @@ public class ContoursModResistorDetector extends ResistorDetector {
         }
     }
 }
+
+

@@ -3,17 +3,17 @@ package titik.com.pantaupadi.FungsiDeteksi;
 import org.opencv.core.Scalar;
 
 /**
- *
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * jadi ini isinya tentang warna yang digunakan, terdapat minimun dan maksimum nilai HSV.
- * warna diasosiaikan dengan menggunakan warna mereka berdasarkan pengecekan apakah warna tersebut diantara
- * nilai warna minimal dan maksimal HSV scalar.
- *
- *
+ * This class contains definitions for the color used for resistor bands
+ * in the form of a minimum and maximum HSV value.
+ * <p>
+ * Colors can be associated with their names by checking if the color
+ * is between the lower and upper bounds of a color.
+ * <p>
  * HSV:
  * Scalar(H, S, V);
  * Scalar(0-180, 0-255, 0-255);
  * <p>
+ * Created by stefan on 25.05.2017.
  */
 public class ColorDefinitionsHsv {
 
@@ -28,9 +28,9 @@ public class ColorDefinitionsHsv {
 
     public static final Scalar YELLOW_MIN = new Scalar(25, 130, 100);
     public static final Scalar YELLOW_MAX = new Scalar(34, 250, 160);
-//
-//    public static final Scalar GREEN_MIN = new Scalar(35, 60, 60);
-//    public static final Scalar GREEN_MAX = new Scalar(75, 250, 150);
+
+    public static final Scalar GREEN_MIN = new Scalar(35, 60, 60);
+    public static final Scalar GREEN_MAX = new Scalar(75, 250, 150);
 
     public static final Scalar BLUE_MIN = new Scalar(82, 60, 49);
     public static final Scalar BLUE_MAX = new Scalar(128, 255, 255);
@@ -38,38 +38,9 @@ public class ColorDefinitionsHsv {
     public static final Scalar VIOLET_MIN = new Scalar(129, 60, 50);
     public static final Scalar VIOLET_MAX = new Scalar(165, 250, 150);
 
-    public static final Scalar  GREEN_MIN0= new Scalar(40,50,50);
-    public static final Scalar  GREEN_MAX0= new Scalar(44,255,255);
-
-    public static final Scalar  GREEN_MIN1= new Scalar(48,60,53);
-    public static final Scalar  GREEN_MAX1= new Scalar(49,255,255);
-
-//    public static final Scalar GREEN_MIN2 = new Scalar(45,60,53);
-//    public static final Scalar GREEN_MAX2 = new Scalar(47,255,255);
-//
-//    public static final Scalar GREEN_MIN3 = new Scalar(50.5 ,56,35);
-//    public static final Scalar GREEN_MAX3 = new Scalar(58, 255,255);
-
-    public static final Scalar GREEN_MIN2 = new Scalar(56, 243, 85);
-    public static final Scalar GREEN_MAX2 = new Scalar(57, 248, 90);
-
-    public static final Scalar GREEN_MIN3 = new Scalar(58, 183, 92);
-    public static final Scalar GREEN_MAX3 = new Scalar(59, 184, 93);
-
-    public static final Scalar GREEN_MIN4 = new Scalar(61, 162, 83);
-    public static final Scalar GREEN_MAX4 = new Scalar(65, 163, 87);
-
-    public static final Scalar GREEN_MIN5 = new Scalar(66, 143, 85);
-    public static final Scalar GREEN_MAX5 = new Scalar(74, 145, 87);
-
-    public static final Scalar COBA_MIN = new Scalar(88, 70, 65);
-    public static final Scalar COBA_MAX = new Scalar(81, 39, 88);
-
     /**
      * Red wraps around and is therefore defined twice
      */
-
-//    jadi ini tuh warna HSV
     public static final Scalar RED2_MIN = new Scalar(166, 65, 50);
     public static final Scalar RED2_MAX = new Scalar(180, 250, 150);
 
@@ -118,28 +89,23 @@ public class ColorDefinitionsHsv {
     }
 
     /**
+     * Checks if a scalar value is between an lower and and upper limit.
+     * A scalar is between two other scalars if ALL values of the scalar are between the bounds.
      *
      * @param scalar     The scalar to check if it is between the lower and upper bound
      * @param lowerBound The lower bound. Every value of scalar has to be above these values.
      * @param upperBound The upper bound. Every value of scalar has to be below these values.
      * @return true if the scalar is between the bounds, false otherwise
-     *
-     * cek jika nilai scalar diantara batas terendah dan tertinggi warna
-     * sebuah scalar diantara 2 bounds
-     * scalar = untuk memeriksa apakah berada di antara batas bawah dan atas
-     * lowerBound = Setiap nilai skalar harus di atas nilai-nilai ini.
-     * UpperBound = Batas atas. Setiap nilai skalar harus di bawah nilai-nilai ini.
-     * jika skalar berada di antara batas maka bernilai true, dan false untuk sebaliknya
      */
     private static boolean isScalarBetweenBounds(Scalar scalar, Scalar lowerBound, Scalar upperBound) {
         if (scalar == null || lowerBound == null || upperBound == null)
-            throw new IllegalArgumentException("Scalar harusnya gaboleh null lah");
+            throw new IllegalArgumentException("scalars must not be null!");
 
         if (lowerBound.val.length != upperBound.val.length)
-            System.err.println("upper and lower bound size kagak sama");
+            System.err.println("upper and lower bound size mismatch");
 
         if (scalar.val.length != lowerBound.val.length)
-            System.err.println("scalar and bounds size sama");
+            System.err.println("scalar and bounds size mismatch");
 
         for (int i = 0; i < scalar.val.length; i++) {
             if (scalar.val[i] < lowerBound.val[i] || scalar.val[i] > upperBound.val[i]) {
@@ -151,16 +117,15 @@ public class ColorDefinitionsHsv {
     }
 
     /**
-     * konversi warna HSV ke nama warna,
-     * nama dari warna ditentukan dari pengecekan warna yang tersedia diantara bounds dari nama warna
-     *
-     * ColorName.Unknown akan muncul jika tidak ada kecocokan nama warna yang ditemukan
-     * method akan menampilkan pesan error jika color definitios overlap
+     * Converts a HSV color to a color name.
+     * The name of a color is determined by checking if the provided color
+     * is between the bounds of the color name.
+     * <p>
+     * ColorName.Unknown is returned if no matching color name can be found.
+     * The method prints error messages if color definitions overlap.
      *
      * @param colorHsv The color in HSV space to convert to a name.
      * @return The name associated with the given color, or ColorName.Unknown.
-     *
-     *
      */
     public static ColorName getColorName(Scalar colorHsv) {
         if (colorHsv == null)
@@ -176,17 +141,6 @@ public class ColorDefinitionsHsv {
             name = ColorName.Red;
         }
 
-//        if (isScalarBetweenBounds(colorHsv, GREEN_MIN0, GREEN_MAX0) ||
-//                isScalarBetweenBounds(colorHsv, GREEN_MIN1, GREEN_MAX1) ||
-//                     isScalarBetweenBounds(colorHsv, GREEN_MIN2, GREEN_MAX2) ||
-//                             isScalarBetweenBounds(colorHsv, GREEN_MIN3, GREEN_MAX3)){
-//                    if (name != ColorName.Unknown)
-//                        System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green + ")!");
-//
-//                    name = ColorName. Green;
-//        }
-
-
         if (isScalarBetweenBounds(colorHsv, ORANGE_MIN, ORANGE_MAX)) {
             if (name != ColorName.Unknown)
                 System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Orange + ")!");
@@ -201,48 +155,12 @@ public class ColorDefinitionsHsv {
             name = ColorName.Yellow;
         }
 
-        if (isScalarBetweenBounds(colorHsv, GREEN_MIN1, GREEN_MAX1)) {
+        if (isScalarBetweenBounds(colorHsv, GREEN_MIN, GREEN_MAX)) {
             if (name != ColorName.Unknown)
-                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green1 + ")!");
+                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green + ")!");
 
-            name = ColorName.Green1;
+            name = ColorName.Green;
         }
-
-        if (isScalarBetweenBounds(colorHsv, GREEN_MIN2, GREEN_MAX2)) {
-            if (name != ColorName.Unknown)
-                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green2 + ")!");
-
-            name = ColorName.Green2;
-        }
-
-        if (isScalarBetweenBounds(colorHsv, GREEN_MIN3, GREEN_MAX3)) {
-            if (name != ColorName.Unknown)
-                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green3 + ")!");
-
-            name = ColorName.Green3;
-        }
-
-        if (isScalarBetweenBounds(colorHsv, GREEN_MIN4, GREEN_MAX4)) {
-            if (name != ColorName.Unknown)
-                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green4 + ")!");
-
-            name = ColorName.Green4;
-        }
-
-        if (isScalarBetweenBounds(colorHsv, GREEN_MIN5, GREEN_MAX5)) {
-            if (name != ColorName.Unknown)
-                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green5 + ")!");
-
-            name = ColorName.Green5;
-        }
-
-
-//        if (isScalarBetweenBounds(colorHsv, GREEN_MIN, GREEN_MAX)) {
-//            if (name != ColorName.Unknown)
-//                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green + ")!");
-//
-//            name = ColorName.Green;
-//        }
 
         if (isScalarBetweenBounds(colorHsv, BLUE_MIN, BLUE_MAX)) {
             if (name != ColorName.Unknown)
@@ -286,21 +204,6 @@ public class ColorDefinitionsHsv {
             name = ColorName.White;
         }
 
-        if (isScalarBetweenBounds(colorHsv, GREEN_MIN0, GREEN_MAX0)) {
-            if (name != ColorName.Unknown)
-                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Green0 + ")!");
-
-            name = ColorName.Green0;
-        }
-
-
-        if (isScalarBetweenBounds(colorHsv, COBA_MIN, COBA_MAX)) {
-            if (name != ColorName.Unknown)
-                System.err.println("overlapping colorHsv name definitions (" + name + " and " + ColorName.Coba + ")!");
-
-            name = ColorName.Coba;
-        }
-
         /*
         if(isScalarBetweenBounds(colorHsv, GOLD_MIN, GOLD_MAX)){
             if(name != ColorName.Unknown)
@@ -322,11 +225,10 @@ public class ColorDefinitionsHsv {
     }
 
     /**
-     *
-     * Kembali ke warna HSV yang merepresentasikan nama waran
-     * Warna merepresentasikan sebuah nama yang sudah dihitung dengan nilai rata- rata
-     * yang berasal dari lower dan upper bound dari definisi warna itu sendiri
-     *
+     * Returns the HSV color representing a color name.
+     * The color representing a name is calculated with the mean value
+     * of the lower and upper bound of the color definition.
+     * <p>
      * Returns the color UNKNOWN (black) for unknown colors.
      *
      * @param name The color name to convert to a HSV color
@@ -344,8 +246,8 @@ public class ColorDefinitionsHsv {
                 return meanOfScalars(ORANGE_MAX, ORANGE_MIN);
             case Yellow:
                 return meanOfScalars(YELLOW_MAX, YELLOW_MIN);
-//            case Green:
-//                return meanOfScalars(GREEN_MAX, GREEN_MIN);
+            case Green:
+                return meanOfScalars(GREEN_MAX, GREEN_MIN);
             case Blue:
                 return meanOfScalars(BLUE_MAX, BLUE_MIN);
             case Violet:
@@ -354,14 +256,6 @@ public class ColorDefinitionsHsv {
                 return meanOfScalars(GREY_MAX, GREY_MIN);
             case White:
                 return meanOfScalars(WHITE_MAX, BLACK_MIN);
-            case Green0:
-                return meanOfScalars(GREEN_MAX0, GREEN_MIN0);
-            case Green1:
-                return meanOfScalars(GREEN_MAX1, GREEN_MIN1);
-            case Green2:
-                return meanOfScalars(GREEN_MAX2, GREEN_MIN2);
-            case Green3:
-                return meanOfScalars(GREEN_MAX3, GREEN_MIN3);
 
             /*
             case Gold:

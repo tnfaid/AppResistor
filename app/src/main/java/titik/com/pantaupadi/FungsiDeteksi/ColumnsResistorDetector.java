@@ -491,4 +491,6 @@ public class ColumnsResistorDetector extends ResistorDetector {
             return -1;
         }
     }
+
+
 }
