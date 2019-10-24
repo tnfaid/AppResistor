@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.inflateMenu(R.menu.activity_main_drawer);
         }
         if (savedInstanceState == null) {
-            fragment = new Beranda();
+            fragment = new Scan();
             callFragment(fragment);
         }
 
