@@ -1,5 +1,7 @@
 package titik.com.pantaupadi.FungsiDeteksi;
 
+import android.content.ContentValues;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,5 +67,14 @@ public class ColorValues {
         }
 
         return UNKNOWN_COLOR_VALUE;
+    }
+
+    public String getColorByValue(Integer colorValue) {
+        for(ColorName key : colorValues.keySet()){
+            if (colorValues.get(key) == colorValue) {
+                return String.valueOf(key);
+            }
+        }
+        return null;
     }
 }

@@ -457,6 +457,9 @@ public class ColumnsResistorDetector extends ResistorDetector {
      * @return the calculated resistance value, or -1 if the calculation is not possible.
      */
     private int calculateResistance(List<BandInfo> bands) {
+        for (int i=0; i<bands.size(); i++) {
+             detectionResult.addBandValue(ColorValues.getValueForColor(bands.get(i).getColor()));
+        }
         if (numberOfBands == NumberOfBands.Four && bands.size() == 4) {
             int firstDigit = ColorValues.getValueForColor(bands.get(0).getColor());
             int secondDigit = ColorValues.getValueForColor(bands.get(1).getColor());

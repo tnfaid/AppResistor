@@ -110,4 +110,14 @@ public class DetectionResult {
     public void setBandInfo(BandInfo[] bandInfo) {
         this.bandInfo = bandInfo;
     }
+
+    private ArrayList<Integer> bandValue = new ArrayList<Integer>();
+
+    public ArrayList<Integer> getBandValue() {
+        return bandValue;
+    }
+
+    public void addBandValue(int bandValue) {
+        this.bandValue.add(bandValue);
+    }
 }

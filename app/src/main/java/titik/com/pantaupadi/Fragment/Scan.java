@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Environment;
@@ -51,6 +52,7 @@ import titik.com.pantaupadi.Activity.Detection.DetectHasilHitung;
 import titik.com.pantaupadi.Activity.DetectionResultHolder;
 import titik.com.pantaupadi.Activity.ScanHasil;
 import titik.com.pantaupadi.Activity.SplashScreenActivity;
+import titik.com.pantaupadi.FungsiDeteksi.ColorValues;
 import titik.com.pantaupadi.R;
 import titik.com.pantaupadi.FungsiDeteksi.ColumnsResistorDetector;
 import titik.com.pantaupadi.FungsiDeteksi.ContoursModResistorDetector;
@@ -201,11 +203,30 @@ public class Scan extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            ColorValues colorValues = new ColorValues();
                             if (detectionResult.getResistorValue() == DetectionResult.UNKNOWN_RESISTANCE_VALUE) {
                                 resultTextView.setText("N/A");
                             } else {
                                 resultTextView.setText( detectionResult.getResistorValue() + " Ohm " );
-
+                                Toast.makeText(getContext(), "cobaaaa saja " + detectionResult.getBandValue().size(), Toast.LENGTH_LONG).show();
+                                for (int i=0; i<detectionResult.getBandValue().size(); i++) {
+                                    switch (i){
+                                        case 0:
+                                            gelangsatu.setText(colorValues.getColorByValue(detectionResult.getBandValue().get(0)));
+                                            break;
+                                        case 1:
+                                            gelangdua.setText(colorValues.getColorByValue(detectionResult.getBandValue().get(1)));
+                                            break;
+                                        case 2:
+                                            gelangtiga.setText(colorValues.getColorByValue(detectionResult.getBandValue().get(2)));
+                                            break;
+                                        case 3 :
+                                            gelangempat.setText(colorValues.getColorByValue(detectionResult.getBandValue().get(3)));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
 //                                Toast.makeText(getActivity(), "detecresult" + detectionResult.getResistorValue(), Toast.LENGTH_SHORT).show();
 
 
